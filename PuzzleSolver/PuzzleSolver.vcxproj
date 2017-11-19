@@ -111,6 +111,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common.h" />
+    <ClInclude Include="puzzlesolver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="checkerboard" />
+    <None Include="IQ_creator" />
+    <None Include="lucky13" />
+    <None Include="partial_cross" />
+    <None Include="pentominoes3x20" />
+    <None Include="pentominoes4x15" />
+    <None Include="pentominoes5x12" />
+    <None Include="pentominoes6x10" />
+    <None Include="pentominoes8x8_corner_missing" />
+    <None Include="pentominoes8x8_four_missing_corners" />
+    <None Include="pentominoes8x8_four_missing_diagonal" />
+    <None Include="pentominoes8x8_four_missing_near_corners" />
+    <None Include="pentominoes8x8_four_missing_near_middle" />
+    <None Include="pentominoes8x8_four_missing_offset_near_corners" />
+    <None Include="pentominoes8x8_four_missing_offset_near_middle" />
+    <None Include="pentominoes8x8_middle_missing" />
+    <None Include="pentominoes8x8_side_missing" />
+    <None Include="pentominoes8x8_side_offset_missing" />
+    <None Include="test1" />
+    <None Include="test2" />
+    <None Include="thirteen_holes" />
+    <None Include="trivial" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

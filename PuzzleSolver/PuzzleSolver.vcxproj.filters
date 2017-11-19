@@ -14,4 +14,85 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="puzzlesolver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="checkerboard">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="IQ_creator">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="lucky13">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="partial_cross">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="pentominoes3x20">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="pentominoes4x15">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="pentominoes5x12">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="pentominoes6x10">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="pentominoes8x8_corner_missing">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="pentominoes8x8_four_missing_corners">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="pentominoes8x8_four_missing_diagonal">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="pentominoes8x8_four_missing_near_corners">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="pentominoes8x8_four_missing_near_middle">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="pentominoes8x8_four_missing_offset_near_corners">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="pentominoes8x8_four_missing_offset_near_middle">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="pentominoes8x8_middle_missing">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="pentominoes8x8_side_missing">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="pentominoes8x8_side_offset_missing">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test1">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="test2">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="thirteen_holes">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="trivial">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>
