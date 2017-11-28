@@ -1,8 +1,16 @@
 #pragma once
 
+#include "common.h"
 
-class puzzle {
-private:
+struct Tile {
 
-public:
 };
+
+class Puzzle {
+private:
+	Tile board;
+	vector<Tile> tiles;
+public:
+	Puzzle(string inputfile);
+};
+
