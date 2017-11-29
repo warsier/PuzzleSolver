@@ -6,6 +6,8 @@
 
 [Dancing Links](https://en.wikipedia.org/wiki/Dancing_Links)
 
+[A Solver](http://www.mattbusche.org/blog/article/polycube/#performanceP)
+
 ## Dancing Links algorithm to solve
 
 
