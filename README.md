@@ -6,7 +6,8 @@
 
 [Dancing Links](https://en.wikipedia.org/wiki/Dancing_Links)
 
-## Dancing Links algorithm to solve
+## Use dancing Links algorithm to solve pentominos
+Assume total number of tiles is _k_
 
 
 ## Cairo Graphics Library

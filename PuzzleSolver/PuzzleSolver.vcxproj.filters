@@ -18,6 +18,12 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="puzzlesolver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="puzzlesolver.h">
@@ -28,70 +34,70 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="checkerboard">
+    <None Include="checkerboard.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="IQ_creator">
+    <None Include="IQ_creator.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="lucky13">
+    <None Include="lucky13.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="partial_cross">
+    <None Include="partial_cross.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="pentominoes3x20">
+    <None Include="pentominoes3x20.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="pentominoes4x15">
+    <None Include="pentominoes4x15.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="pentominoes5x12">
+    <None Include="pentominoes5x12.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="pentominoes6x10">
+    <None Include="pentominoes6x10.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="pentominoes8x8_corner_missing">
+    <None Include="pentominoes8x8_corner_missing.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="pentominoes8x8_four_missing_corners">
+    <None Include="pentominoes8x8_four_missing_corners.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="pentominoes8x8_four_missing_diagonal">
+    <None Include="pentominoes8x8_four_missing_diagonal.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="pentominoes8x8_four_missing_near_corners">
+    <None Include="pentominoes8x8_four_missing_near_corners.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="pentominoes8x8_four_missing_near_middle">
+    <None Include="pentominoes8x8_four_missing_near_middle.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="pentominoes8x8_four_missing_offset_near_corners">
+    <None Include="pentominoes8x8_four_missing_offset_near_corners.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="pentominoes8x8_four_missing_offset_near_middle">
+    <None Include="pentominoes8x8_four_missing_offset_near_middle.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="pentominoes8x8_middle_missing">
+    <None Include="pentominoes8x8_middle_missing.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="pentominoes8x8_side_missing">
+    <None Include="pentominoes8x8_side_missing.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="pentominoes8x8_side_offset_missing">
+    <None Include="pentominoes8x8_side_offset_missing.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="test1">
+    <None Include="test1.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="test2">
+    <None Include="test2.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="thirteen_holes">
+    <None Include="thirteen_holes.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="trivial">
+    <None Include="trivial.puzzle">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
