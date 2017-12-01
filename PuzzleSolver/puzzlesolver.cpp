@@ -15,6 +15,28 @@ Coordinate& Tile::operator [] (int x)
 	return blocks[x];
 }
 
+bool NormalizeComp(Coordinate a, Coordinate b)
+{
+	if (a.x == b.x)
+		return a.y < b.y;
+	return a.x < b.x;
+}
+
+void Tile::Normalize()
+{
+	int minx = 0x7fffffff;
+	int miny = 0x7fffffff;
+	for (auto i = blocks.begin(); i != blocks.end(); i++) {
+		if (i->x < minx) minx = i->x;
+		if (i->y < miny) miny = i->y;
+	}
+	for (auto i = blocks.begin(); i != blocks.end(); i++) {
+		i->x -= minx;
+		i->y -= miny;
+	}
+	sort(blocks.begin(), blocks.end(), NormalizeComp);
+}
+
 int Tile::size() 
 {
 	return blocks.size();
@@ -44,19 +66,22 @@ Puzzle::Puzzle(string inputfile)
 	for (int i = 0; i < maxlength; i++) {
 		for (int j = 0; j < maxwidth; j++) {
 			if (visited[i][j] == false) {
-				InputDFS(i, j, i, j, -1, arr, visited);
+				InputDFS(i, j, -1, arr, visited);
 			}
 		}
+	}
+
+	for (auto i = tiles.begin(); i != tiles.end(); i++) {
+		i->Normalize();
 	}
 
 	PrintPuzzle();
 }
 
-// x and y show where the DFS is actually at
-// sx and sy show the start of the tile
+// x and y show the current DFS position
 // id shows the id of the tile
 void Puzzle::InputDFS(
-	int x, int y, int sx, int sy, int id,
+	int x, int y, int id,
 	vector<string> &arr, vector<vector<bool>> &visited)
 {
 	if (x < 0 || x >=arr.size() ||
@@ -70,16 +95,16 @@ void Puzzle::InputDFS(
 	if (id == -1) {
 		tiles.push_back(Tile());
 		id = tiles.size() - 1;
-		tiles[id].blocks.push_back(Coordinate(0, 0, arr[x][y]));
+		tiles[id].blocks.push_back(Coordinate(x, y, arr[x][y]));
 	}
 	else {
-		tiles[id].blocks.push_back(Coordinate(x - sx, y - sy, arr[x][y]));
+		tiles[id].blocks.push_back(Coordinate(x, y, arr[x][y]));
 	}
 
-	InputDFS(x - 1, y, sx, sy, id, arr, visited);
-	InputDFS(x + 1, y, sx, sy, id, arr, visited);
-	InputDFS(x, y - 1, sx, sy, id, arr, visited);
-	InputDFS(x, y + 1, sx, sy, id, arr, visited);
+	InputDFS(x - 1, y, id, arr, visited);
+	InputDFS(x + 1, y, id, arr, visited);
+	InputDFS(x, y - 1, id, arr, visited);
+	InputDFS(x, y + 1, id, arr, visited);
 }
 
 

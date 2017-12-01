@@ -4,7 +4,7 @@ void FileFinder(string filePath, string extension, vector<string> & returnFileNa
 {
 	WIN32_FIND_DATA fileInfo;
 	HANDLE hFind;
-	string  fullPath = filePath + extension;
+	string fullPath = filePath + extension;
 	hFind = FindFirstFile(fullPath.c_str(), &fileInfo);
 	if (hFind != INVALID_HANDLE_VALUE) {
 		returnFileName.push_back(fileInfo.cFileName);

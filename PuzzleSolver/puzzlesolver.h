@@ -17,6 +17,7 @@ public:
 	bool rotate[4];
 
 	Coordinate& operator [] (int);
+	void Normalize();
 	int size();
 };
 
@@ -26,7 +27,7 @@ private:
 	vector<Tile> tiles;
 public:
 	Puzzle(string);
-	void InputDFS(int, int, int, int, int, vector<string> &, vector<vector<bool>> &);
+	void InputDFS(int, int, int, vector<string> &, vector<vector<bool>> &);
 	void PrintPuzzle();
 	void Solve();
 };
