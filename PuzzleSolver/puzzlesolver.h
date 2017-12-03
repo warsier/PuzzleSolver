@@ -6,18 +6,25 @@ public:
 	int x, y;
 	char content;
 
+	
+	Coordinate();
 	Coordinate(int, int, char);
+	bool operator != (Coordinate) const;
 	void Print();
 };
 
 class Tile {
 public:
-	vector<Coordinate> blocks;
-	bool reflex[4];
-	bool rotate[4];
+	int width, length;
+	vector<Coordinate> rotateblocks[4];
+	vector<Coordinate> reflexblocks[4];
+	bool rotateflag[4];
+	bool reflexflag[4];
 
 	Coordinate& operator [] (int);
-	void Normalize();
+	void Normalize(vector<Coordinate> &);
+	bool Differentblocks(vector<Coordinate> &, vector<Coordinate> &);
+	void ProcessTile(bool);
 	int size();
 };
 
