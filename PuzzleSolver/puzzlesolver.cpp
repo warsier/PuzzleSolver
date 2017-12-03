@@ -17,11 +17,6 @@ bool Coordinate::operator != (Coordinate a) const
 	return (x != a.x || y != a.y || content != a.content);
 }
 
-Coordinate& Tile::operator [] (int x)
-{
-	return rotateblocks[0][x];
-}
-
 bool NormalizeComp(Coordinate a, Coordinate b)
 {
 	if (a.x == b.x)
@@ -142,8 +137,14 @@ int Tile::size()
 
 Puzzle::Puzzle(string inputfile)
 {
+	/*****************
+	get inputfile
+	*****************/
 	ifstream ifs(inputfile);
 
+	/*****************
+	use DFS to process input file into tiles
+	*****************/
 	vector<string> arr;
 	int maxwidth = 0, maxlength;
 	string line;
@@ -169,6 +170,43 @@ Puzzle::Puzzle(string inputfile)
 		}
 	}
 
+	/*****************
+	find out max tile and pop out (it is the board)
+	*****************/
+	int maxtilepos = 0, maxtileval = 0; // if initialize maxtileval = -1, then no zuo no die
+	for (int i = 0; i < tiles.size(); i++) {
+		if (tiles[i].rotateblocks[0].size() > maxtileval) {
+			maxtilepos = i;
+			maxtileval = tiles[i].rotateblocks[0].size();
+		}
+	}
+	swap(tiles[maxtilepos], tiles[tiles.size() - 1]);
+
+	Tile maxtile = tiles.back();
+	tiles.pop_back();
+
+	maxtile.Normalize(maxtile.rotateblocks[0]);
+	maxtile.width = -1; maxtile.length = -1;
+	for (auto i = maxtile.rotateblocks[0].begin(); i != maxtile.rotateblocks[0].end(); i++) {
+		if (i->x > maxtile.width) maxtile.width = i->x;
+		if (i->y > maxtile.length) maxtile.length = i->y;
+	}
+	maxtile.width++; maxtile.length++;
+
+	cout << 1111111 << maxtile.length << " " << maxtile.width << endl;
+	cout << flush;
+	board.resize(maxtile.width);
+	for (int i = 0; i < board.size(); i++)
+		board[i].resize(maxtile.length, ' ');
+
+	for (auto i = maxtile.rotateblocks[0].begin(); i != maxtile.rotateblocks[0].end(); i++) {
+		board[i->x][i->y] = i->content;
+	}
+
+	/*****************
+	find out all rotations and reflextions (if applicable) of that tile
+	then configure them in a Normalized form
+	*****************/
 	for (auto i = tiles.begin(); i != tiles.end(); i++) {
 		i->ProcessTile();
 	}
@@ -205,9 +243,13 @@ void Puzzle::InputDFS(
 	InputDFS(x, y + 1, id, arr, visited);
 }
 
-
 void Puzzle::PrintPuzzle()
 {
+	for (auto i = board.begin(); i != board.end(); i++) {
+		for (auto j = i->begin(); j != i->end(); j++)
+			cout << (*j);
+		cout << endl;
+	}
 	for (auto i = tiles.begin(); i != tiles.end(); i++) {
 		cout << "0 <= x < " << i->width << ", 0 <= y < " << i->length << endl;
 		for (auto j = i->rotateblocks[0].begin(); j != i->rotateblocks[0].end(); j++) {
@@ -219,7 +261,6 @@ void Puzzle::PrintPuzzle()
 		for (int j = 0; j < 4; j++) cout << (i->reflexflag[j]) << ' ';
 		cout << endl;
 	}
-	
 }
 
 

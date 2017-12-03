@@ -6,7 +6,6 @@ public:
 	int x, y;
 	char content;
 
-	
 	Coordinate();
 	Coordinate(int, int, char);
 	bool operator != (Coordinate) const;
@@ -21,7 +20,6 @@ public:
 	bool rotateflag[4];
 	bool reflexflag[4];
 
-	Coordinate& operator [] (int);
 	void Normalize(vector<Coordinate> &);
 	bool Differentblocks(vector<Coordinate> &, vector<Coordinate> &);
 	void ProcessTile(bool);
