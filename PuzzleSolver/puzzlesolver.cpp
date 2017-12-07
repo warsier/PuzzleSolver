@@ -448,38 +448,38 @@ void Puzzle::Uncover(DancingNode *c)
 
 void Puzzle::DancingDFS(DancingNode &head, vector<DancingNode *> &answerpointer)
 {
-	cout << "wowowaow" << answerpointer.size() << endl;
 	if (head.right == &head) {
 		/*TODO: PrintAnswer*/
 		answercnt++;
 		return;
 	}
 
-	// choose a column to cover
-	DancingNode *c = head.right;
-	int minsize = 0x7fffffff;
-	for (DancingNode *i = head.right; i != &head; i = i->right) {
-		if (i->size < minsize) {
-			c = i;
-			minsize = i->size;
+	//// choose a column to cover
+	//DancingNode *c = head.right;
+	//int minsize = 0x7fffffff;
+	//for (DancingNode *i = head.right; i != &head; i = i->right) {
+	//	if (i->size < minsize) {
+	//		c = i;
+	//		minsize = i->size;
+	//	}
+	//}
+
+	for (DancingNode *c = head.right; c != &head; c = c->right) {
+		Cover(c);
+
+		for (DancingNode *i = c->down; i != c; i = i->down) {
+			answerpointer.push_back(i);
+			for (DancingNode *j = i->right; j != i; j = j->right)
+				Cover(j->column);
+			cout << answerpointer.size() << endl;
+			DancingDFS(head, answerpointer);
+			cout << answerpointer.size() << endl;
+			for (DancingNode *j = answerpointer.back()->left; j != answerpointer.back(); j = j->left)
+				Uncover(j->column);
+			answerpointer.pop_back();
 		}
+		Uncover(c);
 	}
-
-	Cover(c);
-
-	for (DancingNode *i = c->down; i != c; i = i->down) {
-		answerpointer.push_back(i);
-		for (DancingNode *j = i->right; j != i; j = j->right) 
-			Cover(j->column);
-		cout << answerpointer.size() << endl;
-		DancingDFS(head, answerpointer);
-		cout << answerpointer.size() << endl;
-		for (DancingNode *j = answerpointer.back()->left; j != answerpointer.back(); j = j->left)
-			Uncover(j->column);
-		answerpointer.pop_back();
-	}
-	Uncover(c);
-	cout << "asdadsa" << answerpointer.size() << endl;
 }
 
 void Puzzle::Solve()
