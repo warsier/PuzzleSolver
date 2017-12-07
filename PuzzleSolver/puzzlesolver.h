@@ -19,7 +19,7 @@ public:
 	DancingNode *column;
 	int size;
 	int tileid;
-	vector<Coordinate> position;
+	Coordinate pos;
 	DancingNode();
 };
 
@@ -61,11 +61,11 @@ public:
 	void InputDFS(int, int, int, vector<string> &, vector<vector<bool>> &);
 
 	void PrintPuzzle();
-	void PrintAnswer();
+	void PrintAnswer(vector<DancingNode *> &answerpointer);
 
-	void DancingNodeGen(vector<DancingNode> &, vector<Coordinate> &, int, int, int);
+	void DancingNodeGen(vector<DancingNode> &, vector<vector<Coordinate>> &, vector<Coordinate> &, int, int, int);
 
-	void NetworkWeaver(DancingNode &, vector<DancingNode> &, vector<DancingNode> &, vector<DancingNode> &);
+	void NetworkWeaver(DancingNode &,  vector<DancingNode> &, vector<DancingNode> &, vector<vector<Coordinate>> &);
 	void Puzzle::NetworkDeleter(vector<DancingNode> &);
 
 	void Puzzle::Cover(DancingNode *);

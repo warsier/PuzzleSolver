@@ -6,9 +6,7 @@
 #include <vector>
 #include <algorithm>
 
-
-#include "cairo.h"
-#include "cairo-win32.h"
+#include <Windows.h>
 
 using namespace std;
 
