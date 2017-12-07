@@ -17,6 +17,16 @@ bool Coordinate::operator != (Coordinate a) const
 	return (x != a.x || y != a.y || content != a.content);
 }
 
+DancingNode::DancingNode()
+{
+	left = this;
+	right = this;
+	up = this;
+	down = this;
+	size = 0;
+}
+
+
 bool NormalizeComp(Coordinate a, Coordinate b)
 {
 	if (a.x == b.x)
@@ -61,7 +71,7 @@ bool Tile::Differentblocks(vector<Coordinate> &a, vector<Coordinate> &b)
 // 
 void Tile::ProcessTile(bool reflexible = true)
 {
-	// parameter of rotation matrix
+	// parameter of rotation matrix & reflection matrix
 	const int rotate_a[4] = { 1, 0, -1, 0 };
 	const int rotate_b[4] = { 0, 1, 0, -1 };
 	const int rotate_c[4] = { 0, -1, 0, 1 };
@@ -171,7 +181,7 @@ Puzzle::Puzzle(string inputfile)
 	}
 
 	/*****************
-	find out max tile and pop out (it is the board)
+	find out max tile and pop out (then make it the board)
 	*****************/
 	int maxtilepos = 0, maxtileval = 0; // if initialize maxtileval = -1, then no zuo no die
 	for (int i = 0; i < tiles.size(); i++) {
@@ -193,8 +203,6 @@ Puzzle::Puzzle(string inputfile)
 	}
 	maxtile.width++; maxtile.length++;
 
-	cout << 1111111 << maxtile.length << " " << maxtile.width << endl;
-	cout << flush;
 	board.resize(maxtile.width);
 	for (int i = 0; i < board.size(); i++)
 		board[i].resize(maxtile.length, ' ');
@@ -261,6 +269,182 @@ void Puzzle::PrintPuzzle()
 		for (int j = 0; j < 4; j++) cout << (i->reflexflag[j]) << ' ';
 		cout << endl;
 	}
+}
+
+void Puzzle::DancingNodeGen(vector<DancingNode> &validcovers, vector<Coordinate> &tile, int tileid, int xoffset, int yoffset)
+{
+	DancingNode tempd;
+	tempd.size = 0; tempd.tileid = tileid;
+	for (auto i = tile.begin(); i != tile.end(); i++) {
+		tempd.position.push_back(*i);
+		auto p = &tempd.position[tempd.position.size() - 1];
+		p->x += xoffset;
+		p->y += yoffset;
+		if (board[p->x][p->y] != p->content) return;
+	}
+
+	validcovers.push_back(tempd);
+}
+
+void Puzzle::NetworkWeaver(DancingNode &head, vector<DancingNode> &indices, vector<DancingNode> &rows, vector<DancingNode> &validcovers)
+{
+	for (int i = 0; i < board.size() * board[0].size(); i++)
+		rows.push_back(DancingNode());
+	for (int i = 0; i < tiles.size(); i++)
+		indices.push_back(DancingNode());
+
+	/*****************
+	find out all valid covers and store them in a vector
+	*****************/
+	
+	// for each tile
+	for (int i = 0; i < tiles.size(); i++) {
+		// for each rotation in each tile
+		for (int ii = 0; ii < 4; ii++) {
+			// if this rotation is valid
+			if (tiles[i].rotateflag[ii]) {
+				// find all valid covers for it
+				for (int j = 0; j <= (int)board.size() - (ii % 2 ? tiles[i].length : tiles[i].width); j++) {
+					for (int k = 0; k <= (int)board[0].size() - (ii % 2 ? tiles[i].width : tiles[i].length); k++) {
+						DancingNodeGen(validcovers, tiles[i].rotateblocks[ii], i, j, k);
+					}
+				}
+			}
+		}
+
+		// for each reflection in each tile
+		for (int ii = 0; ii < 4; ii++) {
+			// if this reflection is valid
+			if (tiles[i].reflexflag[ii]) {
+				// find all valid covers for it
+				for (int j = 0; j <= (int)board.size() - (ii % 2 ? tiles[i].length : tiles[i].width); j++) {
+					for (int k = 0; k <= (int)board[0].size() - (ii % 2 ? tiles[i].width : tiles[i].length); k++) {
+						DancingNodeGen(validcovers, tiles[i].reflexblocks[ii], i, j, k);
+					}
+				}
+			}
+		}
+	}
+
+	/*for (auto i = validcovers.begin(); i != validcovers.end(); i++) {
+	for (auto j = i->position.begin(); j != i->position.end(); j++)
+	cout << j->x << "," << j->y << " ";
+	cout << endl;
+	}*/
+
+
+	/*****************
+	chain all DancingNodes
+	*****************/
+	head.right = &validcovers[0];
+	validcovers[0].left = &head;
+	head.left = &validcovers[validcovers.size() - 1];
+	validcovers[validcovers.size() - 1].right = &head;
+
+	for (int i = 0; i < validcovers.size() - 1; i++) {
+		validcovers[i].right = &validcovers[i + 1];
+		validcovers[i + 1].left = &validcovers[i];
+	}
+
+	// have to re-point them because pushing them into vector changes their address
+	for (int i = 0; i < validcovers.size(); i++) {
+		validcovers[i].up = &validcovers[i];
+		validcovers[i].down = &validcovers[i];
+	}
+
+
+	/*****************
+	Weave the network
+	*****************/
+	for (auto i = validcovers.begin(); i != validcovers.end(); i++) {
+
+
+		// weave id node into network
+		DancingNode *p = new DancingNode;
+		DancingNode *tempd = &indices[i->tileid];
+		i->up->down = p; p->up = i->up;
+		p->down = &(*i); i->up = p;
+		tempd->left->right = p; p->left = tempd->left;
+		p->right = tempd; tempd->left = p;
+		p->column = &indices[i->tileid];
+
+
+		for (auto j = i->position.begin(); j != i->position.end(); j++) {
+			// weave tile node into network
+			p = new DancingNode;
+			DancingNode *tempd = &rows[j->y * board.size() + j->x];
+			i->up->down = p; p->up = i->up;
+			p->down = &(*i); i->up = p;
+			tempd->left->right = p; p->left = tempd->left;
+			p->right = tempd; tempd->left = p;
+			p->column = &indices[i->tileid];
+		}
+	}
+
+	/*****************
+	remove scaffold
+	*****************/
+	for (auto i = indices.begin(); i != indices.end(); i++) {
+		i->right->left = i->left;
+		i->left->right = i->right;
+	}
+	for (auto i = rows.begin(); i != rows.end(); i++) {
+		i->right->left = i->left;
+		i->left->right = i->right;
+	}
+}
+
+void Puzzle::NetworkDeleter(vector<DancingNode> &validcovers)
+{
+	/*****************
+	Delete dynamic allocated elements in network
+	*****************/
+	for (auto i = validcovers.begin(); i != validcovers.end(); i++) {
+		while (i->down != &(*i)) {
+			DancingNode *p = i->down;
+			i->down = p->down;
+			p->down->up = &(*i);
+			delete p;
+		}
+	}
+}
+
+void Puzzle::DancingDFS(DancingNode &head, vector<DancingNode *> &answerpointer)
+{
+	if (head.right == &head) {
+		/*TODO: PrintAnswer*/
+		return;
+	}
+	
+	/*for (DancingNode *i = head.right->;)*/
+}
+
+void Puzzle::Solve()
+{
+	/*****************
+	initialize dancing link
+	*****************/
+	DancingNode head;
+	vector<DancingNode> indices;
+	vector<DancingNode> rows;
+	vector<DancingNode> validcovers;
+	
+	NetworkWeaver(head, indices, rows, validcovers);
+
+	/*****************
+	Start to dance!
+	*****************/
+	vector<DancingNode *> answerpointer;
+	DancingDFS(head, answerpointer);
+
+	NetworkDeleter(validcovers);
+	
+	/*DancingNode *ddd = validcovers[0].down;
+	for (int t = 0; t < 10; t++) {
+		cout << ddd << endl;
+		ddd = ddd->down;
+	}
+	cout << endl;*/
 }
 
 
