@@ -56,15 +56,12 @@ void PuzzleDrawer::DrawTiles()
 		setfillcolor(colors[colorIndex]);
 		for (int j = 0; j < thisTile.size(); j++)
 		{
-			int pos = thisTile[j].first;
-			int character = thisTile[j].second;
-			int x = pos % n;
-			if (x == 0) x = n;
-			int y = pos / n + 1;
+			int x = thisTile[j].x + 1;
+			int y = thisTile[j].y + 1;
 			solidrectangle((y - 1)*WIDTH, (x - 1)*WIDTH, y*WIDTH, x*WIDTH);
 			settextstyle(WIDTH, WIDTH, _T("Consolas"));
 			setbkmode(TRANSPARENT);
-			outtextxy((y - 1)*WIDTH, (x - 1)*WIDTH, _T(character));
+			outtextxy((y - 1)*WIDTH, (x - 1)*WIDTH, _T(thisTile[j].content));
 			colorMap[x][y] = colors[colorIndex];
 		}
 		colorIndex = (colorIndex + 1) % colors.size();
