@@ -1,6 +1,6 @@
 #include "draw.h"
 
-PuzzleDrawer::PuzzleDrawer(int row, int line, vector<vector<pair<int, char>>> content)
+PuzzleDrawer::PuzzleDrawer(int row, int line, vector<vector<Coordinate>> content)
 {
 	n = row;
 	m = line;
@@ -29,16 +29,14 @@ void PuzzleDrawer::DrawTiles()
 
 	for (int i = 0; i < tiles.size(); i++)
 	{
-		vector<pair<int, char>>thisTile = tiles[i];
+		vector<Coordinate>thisTile = tiles[i];
 		bool check_flag = false;
 		while (!check_flag)
 		{
 			for (int j = 0; j < thisTile.size(); j++)
 			{
-				int pos = thisTile[j].first;
-				int x = pos % n;
-				if (x == 0) x = n;
-				int y = pos / n + 1;
+				int x = thisTile[j].x + 1;
+				int y = thisTile[j].y + 1;
 				vector<int> neighborColor;
 				neighborColor.push_back(colorMap[x - 1][y]);
 				neighborColor.push_back(colorMap[x + 1][y]);
