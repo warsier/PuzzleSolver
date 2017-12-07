@@ -55,13 +55,21 @@ private:
 	vector<vector<char>> board;
 	vector<Tile> tiles;
 	vector<vector<Coordinate>> answer;
+	int answercnt;
 public:
 	Puzzle(string);
 	void InputDFS(int, int, int, vector<string> &, vector<vector<bool>> &);
+
 	void PrintPuzzle();
+	void PrintAnswer();
+
 	void DancingNodeGen(vector<DancingNode> &, vector<Coordinate> &, int, int, int);
+
 	void NetworkWeaver(DancingNode &, vector<DancingNode> &, vector<DancingNode> &, vector<DancingNode> &);
 	void Puzzle::NetworkDeleter(vector<DancingNode> &);
+
+	void Puzzle::Cover(DancingNode *);
+	void Puzzle::Uncover(DancingNode *);
 	void Puzzle::DancingDFS(DancingNode &, vector<DancingNode *> &);
 	void Solve();
 };

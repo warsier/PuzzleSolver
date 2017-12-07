@@ -271,6 +271,11 @@ void Puzzle::PrintPuzzle()
 	}
 }
 
+void Puzzle::PrintAnswer()
+{
+	cout << answercnt << endl;
+}
+
 void Puzzle::DancingNodeGen(vector<DancingNode> &validcovers, vector<Coordinate> &tile, int tileid, int xoffset, int yoffset)
 {
 	DancingNode tempd;
@@ -351,13 +356,20 @@ void Puzzle::NetworkWeaver(DancingNode &head, vector<DancingNode> &indices, vect
 		validcovers[i].up = &validcovers[i];
 		validcovers[i].down = &validcovers[i];
 	}
-
+	for (int i = 0; i < indices.size(); i++) {
+		indices[i].left = &indices[i];
+		indices[i].right = &indices[i];
+	}
+	for (int i = 0; i < rows.size(); i++) {
+		rows[i].left = &rows[i];
+		rows[i].right = &rows[i];
+	}
 
 	/*****************
 	Weave the network
 	*****************/
 	for (auto i = validcovers.begin(); i != validcovers.end(); i++) {
-
+		i->size = i->position.size() + 1;
 
 		// weave id node into network
 		DancingNode *p = new DancingNode;
@@ -366,8 +378,7 @@ void Puzzle::NetworkWeaver(DancingNode &head, vector<DancingNode> &indices, vect
 		p->down = &(*i); i->up = p;
 		tempd->left->right = p; p->left = tempd->left;
 		p->right = tempd; tempd->left = p;
-		p->column = &indices[i->tileid];
-
+		p->column = &(*i);
 
 		for (auto j = i->position.begin(); j != i->position.end(); j++) {
 			// weave tile node into network
@@ -377,7 +388,7 @@ void Puzzle::NetworkWeaver(DancingNode &head, vector<DancingNode> &indices, vect
 			p->down = &(*i); i->up = p;
 			tempd->left->right = p; p->left = tempd->left;
 			p->right = tempd; tempd->left = p;
-			p->column = &indices[i->tileid];
+			p->column = &(*i);
 		}
 	}
 
@@ -409,14 +420,66 @@ void Puzzle::NetworkDeleter(vector<DancingNode> &validcovers)
 	}
 }
 
+void Puzzle::Cover(DancingNode *c)
+{
+	c->right->left = c->left;
+	c->left->right = c->right;
+	for (DancingNode *i = c->down; i != c; i = i->down) {
+		for (DancingNode *j = i->right; j != i; j = j->right) {
+			j->down->up = j->up;
+			j->up->down = j->down;
+			j->column->size -= 1;
+		}
+	}
+}
+
+void Puzzle::Uncover(DancingNode *c)
+{
+	for (DancingNode *i = c->up; i != c; i = i->up) {
+		for (DancingNode *j = i->left; j != i; j = j->left) {
+			j->column->size += 1;
+			j->down->up = j;
+			j->up->down = j;
+		}
+	}
+	c->right->left = c;
+	c->left->right = c;
+}
+
 void Puzzle::DancingDFS(DancingNode &head, vector<DancingNode *> &answerpointer)
 {
+	cout << "wowowaow" << answerpointer.size() << endl;
 	if (head.right == &head) {
 		/*TODO: PrintAnswer*/
+		answercnt++;
 		return;
 	}
-	
-	/*for (DancingNode *i = head.right->;)*/
+
+	// choose a column to cover
+	DancingNode *c = head.right;
+	int minsize = 0x7fffffff;
+	for (DancingNode *i = head.right; i != &head; i = i->right) {
+		if (i->size < minsize) {
+			c = i;
+			minsize = i->size;
+		}
+	}
+
+	Cover(c);
+
+	for (DancingNode *i = c->down; i != c; i = i->down) {
+		answerpointer.push_back(i);
+		for (DancingNode *j = i->right; j != i; j = j->right) 
+			Cover(j->column);
+		cout << answerpointer.size() << endl;
+		DancingDFS(head, answerpointer);
+		cout << answerpointer.size() << endl;
+		for (DancingNode *j = answerpointer.back()->left; j != answerpointer.back(); j = j->left)
+			Uncover(j->column);
+		answerpointer.pop_back();
+	}
+	Uncover(c);
+	cout << "asdadsa" << answerpointer.size() << endl;
 }
 
 void Puzzle::Solve()
@@ -434,6 +497,7 @@ void Puzzle::Solve()
 	/*****************
 	Start to dance!
 	*****************/
+	answercnt = 0;
 	vector<DancingNode *> answerpointer;
 	DancingDFS(head, answerpointer);
 

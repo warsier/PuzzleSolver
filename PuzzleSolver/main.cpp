@@ -10,6 +10,7 @@ int main()
 		cout << (*i) << endl;
 		Puzzle p(*i);
 		p.Solve();
+		p.PrintAnswer();
 	}
 	system("pause");
 	return 0;
