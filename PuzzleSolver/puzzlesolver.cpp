@@ -218,8 +218,6 @@ Puzzle::Puzzle(string inputfile)
 	for (auto i = tiles.begin(); i != tiles.end(); i++) {
 		i->ProcessTile();
 	}
-
-	PrintPuzzle();
 }
 
 // x and y show the current DFS position,
@@ -269,20 +267,32 @@ void Puzzle::PrintPuzzle()
 		for (int j = 0; j < 4; j++) cout << (i->reflexflag[j]) << ' ';
 		cout << endl;
 	}
+
 }
 
-void Puzzle::PrintAnswer(vector<DancingNode *> &answerpointer)
+void Puzzle::PrintAnswer(vector<DancingNode *> &answerpointer, bool print = false)
 {
+	vector<vector<Coordinate>> tempa;
 	for (auto i = answerpointer.begin(); i != answerpointer.end(); i++) {
-		cout << "id = " << (*i)->tileid << " ";
-		if ((*i)->pos.content != ' ')
-			(*i)->pos.Print();
-		for (auto j = (*i)->right; j != (*i); j = j->right) {
-			if (j->pos.content != ' ')
-				j->pos.Print();
+		tempa.push_back(vector<Coordinate>());
+		if (print) cout << "id = " << (*i)->tileid << " ";
+		if ((*i)->pos.content != ' ') {
+			if(print) (*i)->pos.Print();
+			tempa.back().push_back((*i)->pos);
 		}
-		cout << endl;
+		for (auto j = (*i)->right; j != (*i); j = j->right) {
+			if (j->pos.content != ' ') {
+				if(print) j->pos.Print();
+				tempa.back().push_back(j->pos);
+			}
+		}
+		if (print) cout << endl;
 	}
+}
+
+void Puzzle::PrintAnswerCnt()
+{
+	cout << "AnswerCnt = " << answercnt << endl;
 }
 
 void Puzzle::DancingNodeGen(vector<DancingNode> &validcovers, vector<vector<Coordinate>> &positions, vector<Coordinate> &tile, int tileid, int xoffset, int yoffset)
@@ -471,12 +481,10 @@ void Puzzle::Uncover(DancingNode *c)
 
 void Puzzle::DancingDFS(DancingNode &head, vector<DancingNode *> &answerpointer)
 {
-	/*if (answerpointer.size() >= 10)
-		cout << answerpointer.size() << endl;*/
+
 	if (head.right == &head) {
 		PrintAnswer(answerpointer);
 		answercnt++;
-		if (answercnt % 10 == 0) cout << answercnt << endl;
 		return;
 	}
 
@@ -535,4 +543,7 @@ void Puzzle::Solve()
 	cout << endl;*/
 }
 
-
+vector<vector<vector<Coordinate>>> Puzzle::ReadAnswers()
+{
+	return answer;
+}

@@ -54,14 +54,16 @@ class Puzzle {
 private:
 	vector<vector<char>> board;
 	vector<Tile> tiles;
-	vector<vector<Coordinate>> answer;
+	vector<vector<vector<Coordinate>>> answer;
 	int answercnt;
 public:
 	Puzzle(string);
 	void InputDFS(int, int, int, vector<string> &, vector<vector<bool>> &);
 
 	void PrintPuzzle();
-	void PrintAnswer(vector<DancingNode *> &answerpointer);
+	void PrintAnswer(vector<DancingNode *> &answerpointer, bool);
+	vector<vector<vector<Coordinate>>> ReadAnswers();
+	void PrintAnswerCnt();
 
 	void DancingNodeGen(vector<DancingNode> &, vector<vector<Coordinate>> &, vector<Coordinate> &, int, int, int);
 
