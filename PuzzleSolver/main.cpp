@@ -6,17 +6,23 @@
 int main()
 {
 	vector<string> testfiles;
-	FileFinder("..\\PuzzleSolver\\", "trivial.puzzle", testfiles);
+
+	string fileName;
+	bool flag = false;
+	while (!flag)
+	{
+		cout << "Please input the puzzle file name:" << endl;
+		cin >> fileName;
+		flag = FileFinder("..\\PuzzleSolver\\", fileName, testfiles);
+	}
+
+	//FileFinder("..\\PuzzleSolver\\", "pentominoes5x12.puzzle", testfiles);
+
 	for (auto i = testfiles.begin(); i != testfiles.end(); i++) {
 		cout << (*i) << endl;
 		Puzzle p(*i);
 		p.Solve();
-		auto answers = p.ReadAnswers();
-		for (int i = 0; i < 10; i++) {
-			PuzzleDrawer d(20, 20, answers[i]);
-			d.DrawTiles();
-		}
-			
+		p.PrintAnswer();
 	}
 	system("pause");
 	return 0;
