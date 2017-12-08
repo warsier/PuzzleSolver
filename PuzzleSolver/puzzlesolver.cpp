@@ -1,4 +1,5 @@
 #include "puzzlesolver.h"
+#include "draw.h"
 
 Coordinate::Coordinate() {}
 
@@ -273,7 +274,25 @@ void Puzzle::PrintPuzzle()
 
 void Puzzle::PrintAnswer()
 {
+	cout << "Number of answers: ";
 	cout << answercnt << endl;
+
+	if (answercnt > 0)
+	{
+		int displayNo;
+		while (true)
+		{
+			cout << "Which answer do you want to display? Enter 0 to exit." << endl;
+			cin >> displayNo;
+			if (displayNo == 0) break;
+			if (displayNo < 0 || displayNo >= answer.size())
+			{
+				cout << "Invalid index." << endl;
+				continue;
+			}
+			//PuzzleDrawer draw(board.size(), board[0].size, answer[displayNo]);
+		}
+	}
 }
 
 void Puzzle::DancingNodeGen(vector<DancingNode> &validcovers, vector<Coordinate> &tile, int tileid, int xoffset, int yoffset)
