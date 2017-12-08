@@ -46,9 +46,6 @@
     <None Include="IQ_creator.puzzle">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="lucky13.puzzle">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="partial_cross.puzzle">
       <Filter>Resource Files</Filter>
     </None>
@@ -104,6 +101,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="trivial.puzzle">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="lucky13.puzzle">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
