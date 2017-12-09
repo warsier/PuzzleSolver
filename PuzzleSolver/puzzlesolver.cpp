@@ -249,6 +249,16 @@ void Puzzle::InputDFS(
 	InputDFS(x, y + 1, id, arr, visited);
 }
 
+int Puzzle::length()
+{
+	return board[0].size();
+}
+
+int Puzzle::width()
+{
+	return board.size();
+}
+
 void Puzzle::PrintPuzzle()
 {
 	for (auto i = board.begin(); i != board.end(); i++) {
@@ -288,6 +298,7 @@ void Puzzle::PrintAnswer(vector<DancingNode *> &answerpointer, bool print = fals
 		}
 		if (print) cout << endl;
 	}
+	answer.push_back(tempa);
 }
 
 void Puzzle::PrintAnswerCnt()
@@ -545,5 +556,10 @@ void Puzzle::Solve()
 
 vector<vector<vector<Coordinate>>> Puzzle::ReadAnswers()
 {
+	for (auto j = answer[0].begin(); j != answer[0].end(); j++) {
+		for (auto k = j->begin(); k != j->end(); k++)
+			k->Print();
+		cout << endl;
+	}
 	return answer;
 }

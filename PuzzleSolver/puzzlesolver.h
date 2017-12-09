@@ -59,6 +59,8 @@ private:
 public:
 	Puzzle(string);
 	void InputDFS(int, int, int, vector<string> &, vector<vector<bool>> &);
+	int length();
+	int width();
 
 	void PrintPuzzle();
 	void PrintAnswer(vector<DancingNode *> &answerpointer, bool);
