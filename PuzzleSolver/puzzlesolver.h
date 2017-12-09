@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "common.h"
+#include "draw.h"
 
 class Coordinate {
 public:
@@ -63,7 +64,10 @@ public:
 	int width();
 
 	void PrintPuzzle();
-	void PrintAnswer(vector<DancingNode *> &answerpointer, bool);
+
+	//void PrintAnswer(vector<DancingNode *> &answerpointer, bool);
+	void PrintAnswer();
+
 	vector<vector<vector<Coordinate>>> ReadAnswers();
 	void PrintAnswerCnt();
 

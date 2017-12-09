@@ -1,6 +1,6 @@
 #include "common.h"
 
-void FileFinder(string filePath, string extension, vector<string> & returnFileName)
+bool FileFinder(string filePath, string extension, vector<string> & returnFileName)
 {
 	WIN32_FIND_DATA fileInfo;
 	HANDLE hFind;
@@ -11,5 +11,7 @@ void FileFinder(string filePath, string extension, vector<string> & returnFileNa
 		while (FindNextFile(hFind, &fileInfo) != 0) {
 			returnFileName.push_back(fileInfo.cFileName);
 		}
+		return true;
 	}
+	else return false;
 }
