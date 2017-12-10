@@ -280,23 +280,46 @@ void Puzzle::PrintPuzzle()
 
 }
 
-void Puzzle::PrintAnswer(vector<DancingNode *> &answerpointer, bool print = false)
+//void Puzzle::PrintAnswer(vector<DancingNode *> &answerpointer, bool print = false)
+//{
+//	vector<vector<Coordinate>> tempa;
+//	for (auto i = answerpointer.begin(); i != answerpointer.end(); i++) {
+//		tempa.push_back(vector<Coordinate>());
+//		if (print) cout << "id = " << (*i)->tileid << " ";
+//		if ((*i)->pos.content != ' ') {
+//			if(print) (*i)->pos.Print();
+//			tempa.back().push_back((*i)->pos);
+//		}
+//		for (auto j = (*i)->right; j != (*i); j = j->right) {
+//			if (j->pos.content != ' ') {
+//				if(print) j->pos.Print();
+//				tempa.back().push_back(j->pos);
+//			}
+//		}
+//		if (print) cout << endl;
+//	}
+//}
+
+void Puzzle::PrintAnswer()
 {
-	vector<vector<Coordinate>> tempa;
-	for (auto i = answerpointer.begin(); i != answerpointer.end(); i++) {
-		tempa.push_back(vector<Coordinate>());
-		if (print) cout << "id = " << (*i)->tileid << " ";
-		if ((*i)->pos.content != ' ') {
-			if(print) (*i)->pos.Print();
-			tempa.back().push_back((*i)->pos);
-		}
-		for (auto j = (*i)->right; j != (*i); j = j->right) {
-			if (j->pos.content != ' ') {
-				if(print) j->pos.Print();
-				tempa.back().push_back(j->pos);
+	cout << "Number of answers: ";
+	cout << answercnt << endl;
+
+	if (answercnt > 0)
+	{
+		int displayNo;
+		while (true)
+		{
+			cout << "Which answer do you want to display? Enter 0 to exit." << endl;
+			cin >> displayNo;
+			if (displayNo == 0) break;
+			if (displayNo < 0 || displayNo >= answer.size())
+			{
+				cout << "Invalid index." << endl;
+				continue;
 			}
+			PuzzleDrawer draw(board.size(), board[0].size, answer[displayNo]);
 		}
-		if (print) cout << endl;
 	}
 	answer.push_back(tempa);
 }
@@ -494,7 +517,7 @@ void Puzzle::DancingDFS(DancingNode &head, vector<DancingNode *> &answerpointer)
 {
 
 	if (head.right == &head) {
-		PrintAnswer(answerpointer);
+		//PrintAnswer(answerpointer);
 		answercnt++;
 		return;
 	}
