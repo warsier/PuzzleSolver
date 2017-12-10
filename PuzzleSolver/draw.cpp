@@ -19,7 +19,7 @@ PuzzleDrawer::PuzzleDrawer(int row, int line, vector<vector<Coordinate>> content
 
 void PuzzleDrawer::DrawTiles()
 {
-	initgraph(m * WIDTH, n * WIDTH);
+	initgraph(m * WIDTH, n * WIDTH, SHOWCONSOLE);
 	setbkcolor(BLACK);
 	cleardevice();
 

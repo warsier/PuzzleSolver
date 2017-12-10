@@ -556,10 +556,10 @@ void Puzzle::Solve()
 
 vector<vector<vector<Coordinate>>> Puzzle::ReadAnswers()
 {
-	for (auto j = answer[0].begin(); j != answer[0].end(); j++) {
+	/*for (auto j = answer[0].begin(); j != answer[0].end(); j++) {
 		for (auto k = j->begin(); k != j->end(); k++)
 			k->Print();
 		cout << endl;
-	}
+	}*/
 	return answer;
 }

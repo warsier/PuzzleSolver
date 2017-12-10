@@ -10,4 +10,4 @@
 
 using namespace std;
 
-void FileFinder(string, string, vector<string> &);
+bool FileFinder(string, string, vector<string> &);
