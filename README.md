@@ -7,17 +7,3 @@
 [Dancing Links](https://en.wikipedia.org/wiki/Dancing_Links)
 
 [A Solver](http://www.mattbusche.org/blog/article/polycube/#performanceP)
-
-## Dancing Links algorithm to solve
-
-
-## Cairo Graphics Library
-This project intends to use Cairo as a light-weight graphics library for demonstrating the output.
-
-It will automatically use x86 version of Cairo library. For most case this will just work fine.
-
-If users desire to use x64 version of Cairo instead, go to the following two settings in Visual Studio and change `x86` to `x64` in the directory shown correpondingly:
-```
-Project -> PuzzleSolverProperties -> Linker -> General -> Additional Library Directories
-Project -> PuzzleSolverProperties -> Build Events ->  Post-Build Event -> Command Line
-```
